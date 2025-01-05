@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { FaBrain, FaLightbulb, FaChartLine, FaRobot } from "react-icons/fa";
+import { FaBrain, FaLightbulb, FaChartLine, FaRobot, FaImage } from "react-icons/fa";
 
 const features = [
   {
@@ -29,16 +29,41 @@ const features = [
 
 export default function Home() {
   const [input, setInput] = useState("");
+  const [image, setImage] = useState(null);
   const [messages, setMessages] = useState([]);
 
-  const handlePredict = async () => {
-    const mockPrediction = `Predicted output for "${input}"`;
-    setMessages([...messages, { type: "input", text: input }, { type: "prediction", text: mockPrediction }]);
+  const handlePredict = () => {
+    if (!input.trim() && !image) return;
+
+    const mockPrediction = image
+      ? `Predicted output for uploaded image: "${image.name}"`
+      : `Predicted output for "${input}"`;
+
+    setMessages([
+      ...messages,
+      { type: "input", text: input || `Image: ${image.name}` },
+      { type: "prediction", text: mockPrediction },
+    ]);
+
     setInput("");
+    setImage(null);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handlePredict();
+    }
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImage(file);
+    }
   };
 
   return (
-    <div className="font-poppins">
+    <div className="font-poppins h-screen flex flex-col">
       {/* Hero Section */}
       <header className="text-center py-16 bg-purple-50">
         <motion.h1
@@ -55,7 +80,8 @@ export default function Home() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.7 }}
         >
-          Input your data and let our advanced AI model generate predictions that can transform your workflow.
+          Input your data or upload an image, and let our advanced AI model generate
+          predictions that can transform your workflow.
         </motion.p>
       </header>
 
@@ -83,51 +109,58 @@ export default function Home() {
       </section>
 
       {/* Chat Interface */}
-      <section className="py-8 px-4 bg-white">
+      <div className="flex-grow px-4 py-8 bg-white overflow-auto">
         <div className="max-w-2xl mx-auto">
-          <div className="bg-gray-50 p-6 rounded-lg shadow-lg">
-            <h3 className="text-2xl font-bold mb-4 text-gray-900 text-center">AI Chat Predictions</h3>
-            <div className="space-y-4 mb-6 max-h-60 overflow-y-auto">
-              {messages.map((msg, index) => (
-                <div
-                  key={index}
-                  className={`flex ${msg.type === "input" ? "justify-end" : "justify-start"}`}
-                >
-                  <div
-                    className={`max-w-sm p-3 rounded-lg ${
-                      msg.type === "input"
-                        ? "bg-green-500 text-white"
-                        : "bg-gray-200 text-gray-900"
-                    }`}
-                  >
-                    {msg.text}
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="flex items-center gap-2">
-              <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Type your input..."
-                className="flex-grow px-4 py-2 border-2 border-gray-300 rounded-lg"
-              />
-              <button
-                onClick={handlePredict}
-                className="px-4 py-2 text-white bg-purple-600 rounded-lg hover:bg-purple-700"
+          <div className="space-y-4">
+            {messages.map((msg, index) => (
+              <div
+                key={index}
+                className={`flex ${
+                  msg.type === "input" ? "justify-end" : "justify-start"
+                }`}
               >
-                Predict
-              </button>
-            </div>
+                <div
+                  className={`max-w-sm p-3 rounded-lg ${
+                    msg.type === "input"
+                      ? "bg-green-500 text-white"
+                      : "bg-gray-200 text-gray-900"
+                  } shadow`}
+                >
+                  {msg.text}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* Footer */}
-      <footer className="py-4 bg-gray-800 text-center text-white">
-        <p>&copy; 2025 AI Predictions Inc. All rights reserved.</p>
-      </footer>
+      {/* Fixed Input Section */}
+      <div className="fixed bottom-0 left-0 right-0 md:w-[60%] w-full mx-auto bg-white shadow-lg px-4 py-3 flex items-center gap-2">
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder="Type your input..."
+          className="flex-grow px-4 py-2 border-2 md:w-1/2 w-2/3 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+        />
+        <label className="cursor-pointer px-4 py-2 text-white bg-blue-600 rounded-full hover:bg-blue-700 shadow-md flex items-center gap-2">
+          <FaImage />
+          <span>Upload Image</span>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            className="hidden"
+          />
+        </label>
+        <button
+          onClick={handlePredict}
+          className="px-4 py-2 text-white bg-purple-600 rounded-full hover:bg-purple-700 shadow-md"
+        >
+          Predict
+        </button>
+      </div>
     </div>
   );
 }
