@@ -1,102 +1,133 @@
-"use client"; // Ensure this works in Next.js 13+ with client-side rendering
+"use client";
 
-import { useState } from "react";
-import axios from "axios";
-import { CircularProgress } from "@mui/material";  // Material UI Spinner
-import { AiOutlineCloudUpload, AiOutlineCamera, AiOutlineCheckCircle } from "react-icons/ai"; // React Colored Icons
-import { MdFileUpload } from "react-icons/md"; // React Colored Icon for upload
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { FaBrain, FaLightbulb, FaChartLine, FaRobot } from "react-icons/fa";
 
-export default function UploadImage() {
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [predictionResults, setPredictionResults] = useState(null);
+const features = [
+  {
+    title: "AI-Powered Insights",
+    description: "Get actionable predictions powered by cutting-edge AI technology.",
+    icon: <FaBrain className="text-white text-4xl" />,
+  },
+  {
+    title: "Innovative Solutions",
+    description: "Transform your ideas into results with our AI-driven platform.",
+    icon: <FaLightbulb className="text-white text-4xl" />,
+  },
+  {
+    title: "Real-Time Analysis",
+    description: "Experience fast and accurate predictions for your data.",
+    icon: <FaChartLine className="text-white text-4xl" />,
+  },
+  {
+    title: "User-Friendly AI",
+    description: "Easily integrate AI predictions into your workflow.",
+    icon: <FaRobot className="text-white text-4xl" />,
+  },
+];
 
-  const handleImageChange = (e) => {
-    setSelectedImage(e.target.files[0]);
-  };
+export default function Home() {
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState([]);
 
-  const handleUpload = async () => {
-    if (!selectedImage) return alert("Please select an image!");
-
-    setIsLoading(true);
-    const formData = new FormData();
-    formData.append("image", selectedImage);
-
-    try {
-      // Send image to Django backend for processing
-      const response = await axios.post("http://localhost:8000/api/predict/", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      setPredictionResults(response.data);
-    } catch (error) {
-      console.error("Error uploading image:", error);
-    } finally {
-      setIsLoading(false);
-    }
+  const handlePredict = async () => {
+    const mockPrediction = `Predicted output for "${input}"`;
+    setMessages([...messages, { type: "input", text: input }, { type: "prediction", text: mockPrediction }]);
+    setInput("");
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <div className="w-full max-w-lg p-6 bg-white shadow-xl rounded-lg">
-        <h1 className="text-3xl font-semibold text-center text-gray-800 mb-6">
-          Upload a Photo for AI Prediction
-        </h1>
-
-        {/* File input for image */}
-        <div className="flex justify-center items-center mb-4">
-          <label className="cursor-pointer w-full p-4 border-2 border-dashed border-gray-300 rounded-lg text-gray-600">
-            <AiOutlineCamera className="text-blue-500 text-3xl mx-auto" />
-            <span className="block text-center mt-2">Select Image</span>
-            <input
-              type="file"
-              onChange={handleImageChange}
-              className="hidden"
-            />
-          </label>
-        </div>
-
-        {/* Upload button */}
-        <button
-          onClick={handleUpload}
-          className="w-full py-3 px-6 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 focus:outline-none"
-          disabled={isLoading}
+    <div className="font-poppins">
+      {/* Hero Section */}
+      <header className="text-center py-16 bg-purple-50">
+        <motion.h1
+          className="text-5xl font-bold text-gray-900 mb-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
         >
-          {isLoading ? (
-            <CircularProgress size={24} className="mx-auto" />
-          ) : (
-            <div className="flex items-center justify-center space-x-2">
-              <AiOutlineCloudUpload className="text-white text-xl" />
-              <span>Upload & Predict</span>
-            </div>
-          )}
-        </button>
+          Unlock the Power of <span className="text-green-600">AI Predictions</span>
+        </motion.h1>
+        <motion.p
+          className="max-w-3xl mx-auto text-gray-600"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.7 }}
+        >
+          Input your data and let our advanced AI model generate predictions that can transform your workflow.
+        </motion.p>
+      </header>
 
-        {/* Display prediction results */}
-        {predictionResults && (
-          <div className="mt-6">
-            <h2 className="text-xl font-semibold text-gray-800">Prediction Results</h2>
-            <div className="mt-2">
-              <p className="text-gray-700">
-                <strong>Age: </strong>
-                {predictionResults.age || "Not Available"}
-              </p>
-              <p className="text-gray-700">
-                <strong>Ethnicity: </strong>
-                {predictionResults.ethnicity || "Not Available"}
-              </p>
-              <p className="text-gray-700">
-                <strong>Gender: </strong>
-                {predictionResults.gender || "Not Available"}
-              </p>
-              <div className="flex justify-center mt-4">
-                <AiOutlineCheckCircle className="text-green-500 text-3xl" />
+      {/* Features Section */}
+      <section className="py-8 px-4 md:px-12 bg-gray-100">
+        <div className="max-w-7xl mx-auto text-center">
+          <h2 className="text-4xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-green-500">
+            Why Choose <span className="text-green-600">Our AI Platform</span>?
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {features.map((feature, index) => (
+              <div
+                key={index}
+                className="p-6 bg-white shadow-md rounded-lg transform transition-transform hover:scale-105 flex flex-col items-center"
+              >
+                <span className="flex items-center justify-center mb-4 p-4 rounded-full bg-purple-500">
+                  {feature.icon}
+                </span>
+                <h4 className="text-lg font-bold text-gray-900 mb-2">{feature.title}</h4>
+                <p className="text-gray-500">{feature.description}</p>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Chat Interface */}
+      <section className="py-8 px-4 bg-white">
+        <div className="max-w-2xl mx-auto">
+          <div className="bg-gray-50 p-6 rounded-lg shadow-lg">
+            <h3 className="text-2xl font-bold mb-4 text-gray-900 text-center">AI Chat Predictions</h3>
+            <div className="space-y-4 mb-6 max-h-60 overflow-y-auto">
+              {messages.map((msg, index) => (
+                <div
+                  key={index}
+                  className={`flex ${msg.type === "input" ? "justify-end" : "justify-start"}`}
+                >
+                  <div
+                    className={`max-w-sm p-3 rounded-lg ${
+                      msg.type === "input"
+                        ? "bg-green-500 text-white"
+                        : "bg-gray-200 text-gray-900"
+                    }`}
+                  >
+                    {msg.text}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="flex items-center gap-2">
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Type your input..."
+                className="flex-grow px-4 py-2 border-2 border-gray-300 rounded-lg"
+              />
+              <button
+                onClick={handlePredict}
+                className="px-4 py-2 text-white bg-purple-600 rounded-lg hover:bg-purple-700"
+              >
+                Predict
+              </button>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-4 bg-gray-800 text-center text-white">
+        <p>&copy; 2025 AI Predictions Inc. All rights reserved.</p>
+      </footer>
     </div>
   );
 }
