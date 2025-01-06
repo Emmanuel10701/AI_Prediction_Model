@@ -65,7 +65,7 @@ export default function Home() {
   return (
     <div className="font-poppins h-screen flex flex-col">
       {/* Hero Section */}
-      <header className="text-center py-16 bg-purple-50">
+      <header className="text-center py-16 bg-gray-100">
         <motion.h1
           className="text-5xl font-bold text-gray-900 mb-4"
           initial={{ opacity: 0 }}
@@ -122,7 +122,7 @@ export default function Home() {
       </AnimatePresence>
 
       {/* Chat Interface */}
-      <div className="flex-grow px-4 py-8 bg-white overflow-auto">
+      <div className="flex-grow px-4 py-8 bg-gray-100 mb-10 overflow-auto">
         <div className="max-w-2xl mx-auto">
           <div className="space-y-4">
             {messages.map((msg, index) => (
@@ -151,7 +151,7 @@ export default function Home() {
       </div>
 
       {/* Fixed Input Section */}
-      <div className="fixed bottom-0 left-0 right-0 md:w-[60%] w-full mx-auto bg-white shadow-lg px-4 py-3 flex items-center gap-2">
+      <div className="fixed bottom-0 left-0 right-0 md:w-[60%] w-full mx-auto bg-gray-100 shadow-lg px-4 py-3 flex items-center gap-2">
         <input
           type="text"
           value={input}
