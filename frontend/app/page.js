@@ -31,6 +31,7 @@ export default function Home() {
   const [input, setInput] = useState("");
   const [image, setImage] = useState(null);
   const [messages, setMessages] = useState([]);
+  const currentYear = new Date().getFullYear();
 
   const handlePredict = () => {
     if (!input.trim() && !image) return;
@@ -63,7 +64,7 @@ export default function Home() {
   };
 
   return (
-    <div className="font-poppins h-screen flex flex-col">
+    <div className="font-poppins min-h-screen bg-gray-100 flex flex-col">
       {/* Hero Section */}
       <header className="text-center py-16 bg-gray-100">
         <motion.h1
@@ -87,7 +88,7 @@ export default function Home() {
 
       {/* Features Section */}
       <AnimatePresence>
-        { messages.length === 0 && (
+        {messages.length === 0 && (
           <motion.section
             className="py-8 px-4 md:px-12 bg-gray-100"
             initial={{ opacity: 0 }}
@@ -99,7 +100,7 @@ export default function Home() {
               <h2 className="text-4xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-green-500">
                 Why Choose <span className="text-green-600">Our AI Platform</span>?
               </h2>
-              <div className="grid grid-cols-1 bg-gray-100 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {features.map((feature, index) => (
                   <motion.div
                     key={index}
@@ -135,8 +136,8 @@ export default function Home() {
                 <motion.div
                   className={`max-w-sm p-3 rounded-lg ${
                     msg.type === "input"
-                      ? "bg-blue-500 text-white rounded-xl rounded-tr-none"
-                      : "bg-slate-200 rounded-xl rounded-tl-none text-gray-900"
+                      ? "bg-blue-500 text-white mx-10 font-semibold rounded-xl rounded-tr-none"
+                      : "bg-slate-200 mx-10 font-semibold  rounded-xl rounded-tl-none text-gray-900"
                   } shadow`}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -151,14 +152,14 @@ export default function Home() {
       </div>
 
       {/* Fixed Input Section */}
-      <div className="fixed bottom-0 left-0 right-0 md:w-[60%] w-full mx-auto bg-gray-100 shadow-lg px-4 py-3 flex items-center gap-2">
+      <div className="fixed bottom-20 left-0 right-0 md:w-[60%] w-full mx-auto bg-gray-100  px-4 py-3 flex items-center gap-2">
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Type your input..."
-          className="flex-grow px-4 py-2 border-2 md:w-1/2 w-2/3 border-gray-300 shandow-sm rounded-lg focus:ring-2 focus:ring-purple-500"
+          className="flex-grow px-4 py-2 border-2 md:w-1/2 w-2/3 border-gray-300 hover:shandow-md shandow-sm rounded-lg focus:ring-2 focus:ring-purple-500"
         />
         <label className="cursor-pointer px-4 py-2 text-white bg-blue-600 rounded-full hover:bg-blue-700 shadow-md flex items-center gap-2">
           <FaImage />
@@ -177,6 +178,15 @@ export default function Home() {
           Search
         </button>
       </div>
+
+      {/* Footer */}
+      <footer className="bg-gray-100 text-slate-900 text-md  py-6 mt-auto">
+        <div className="container mx-auto text-center">
+          <p className="text-base md:text-md">
+            &copy; {currentYear} Emmanuel. All Rights Reserved. We can make mistakes; we are not perfect.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }
