@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { FaBrain, FaLightbulb, FaChartLine, FaRobot, FaImage } from "react-icons/fa";
 
 const features = [
@@ -86,27 +86,40 @@ export default function Home() {
       </header>
 
       {/* Features Section */}
-      <section className="py-8 px-4 md:px-12 bg-gray-100">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-green-500">
-            Why Choose <span className="text-green-600">Our AI Platform</span>?
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature, index) => (
-              <div
-                key={index}
-                className="p-6 bg-white shadow-md rounded-lg transform transition-transform hover:scale-105 flex flex-col items-center"
-              >
-                <span className="flex items-center justify-center mb-4 p-4 rounded-full bg-purple-500">
-                  {feature.icon}
-                </span>
-                <h4 className="text-lg font-bold text-gray-900 mb-2">{feature.title}</h4>
-                <p className="text-gray-500">{feature.description}</p>
+      <AnimatePresence>
+        { messages.length === 0 && (
+          <motion.section
+            className="py-8 px-4 md:px-12 bg-gray-100"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="max-w-7xl mx-auto text-center">
+              <h2 className="text-4xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-green-500">
+                Why Choose <span className="text-green-600">Our AI Platform</span>?
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {features.map((feature, index) => (
+                  <motion.div
+                    key={index}
+                    className="p-6 bg-white shadow-md rounded-lg transform transition-transform hover:scale-105 flex flex-col items-center"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1, duration: 0.4 }}
+                  >
+                    <span className="flex items-center justify-center mb-4 p-4 rounded-full bg-purple-500">
+                      {feature.icon}
+                    </span>
+                    <h4 className="text-lg font-bold text-gray-900 mb-2">{feature.title}</h4>
+                    <p className="text-gray-500">{feature.description}</p>
+                  </motion.div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </div>
+          </motion.section>
+        )}
+      </AnimatePresence>
 
       {/* Chat Interface */}
       <div className="flex-grow px-4 py-8 bg-white overflow-auto">
@@ -119,15 +132,18 @@ export default function Home() {
                   msg.type === "input" ? "justify-end" : "justify-start"
                 }`}
               >
-                <div
+                <motion.div
                   className={`max-w-sm p-3 rounded-lg ${
                     msg.type === "input"
                       ? "bg-green-500 text-white"
                       : "bg-gray-200 text-gray-900"
                   } shadow`}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
                 >
                   {msg.text}
-                </div>
+                </motion.div>
               </div>
             ))}
           </div>
