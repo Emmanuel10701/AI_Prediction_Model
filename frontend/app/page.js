@@ -142,7 +142,7 @@ export default function Home() {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Type your input..."
-          className="flex-grow px-4 py-2 border-2 md:w-1/2 w-2/3 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+          className="flex-grow px-4 py-2 border-2 md:w-1/2 w-2/3 border-gray-300 shandow-sm rounded-lg focus:ring-2 focus:ring-purple-500"
         />
         <label className="cursor-pointer px-4 py-2 text-white bg-blue-600 rounded-full hover:bg-blue-700 shadow-md flex items-center gap-2">
           <FaImage />
@@ -158,7 +158,7 @@ export default function Home() {
           onClick={handlePredict}
           className="px-4 py-2 text-white bg-purple-600 rounded-full hover:bg-purple-700 shadow-md"
         >
-          Predict
+          Search
         </button>
       </div>
     </div>
