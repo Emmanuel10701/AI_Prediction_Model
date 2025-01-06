@@ -99,7 +99,7 @@ export default function Home() {
               <h2 className="text-4xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-green-500">
                 Why Choose <span className="text-green-600">Our AI Platform</span>?
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 bg-gray-100 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {features.map((feature, index) => (
                   <motion.div
                     key={index}
@@ -135,8 +135,8 @@ export default function Home() {
                 <motion.div
                   className={`max-w-sm p-3 rounded-lg ${
                     msg.type === "input"
-                      ? "bg-green-500 text-white"
-                      : "bg-gray-200 text-gray-900"
+                      ? "bg-blue-500 text-white rounded-xl rounded-tr-none"
+                      : "bg-slate-200 rounded-xl rounded-tl-none text-gray-900"
                   } shadow`}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
