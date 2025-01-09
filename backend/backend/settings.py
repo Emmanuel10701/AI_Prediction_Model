@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    "core"
+    "rest_framework",
     'django.contrib.staticfiles',
 ]
 
@@ -48,6 +50,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+CORS_ALLOW_ALL_ORIGINS = False  # Ensure this is set to False in production
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # Allow requests from this specific origin
+]
+
 
 ROOT_URLCONF = 'backend.urls'
 
