@@ -18,7 +18,7 @@ RUN npm run build
 FROM python:3.9 AS backend
 
 # Set the working directory for Django
-WORKDIR /app/backend
+WORKDIR /ML/backend
 
 # Install dependencies for the Django app
 COPY backend/requirements.txt ./
@@ -39,11 +39,11 @@ ENV PYTHONUNBUFFERED=1
 FROM python:3.9-slim
 
 # Set working directory
-WORKDIR /app
+WORKDIR /ML
 
 # Install dependencies for the backend
-COPY --from=backend /app/backend /app/backend
-COPY --from=build /app/frontend/build /app/frontend/build
+COPY --from=backend /ML/backend /ML/backend
+COPY --from=build /ML/frontend/build /ML/frontend/build
 
 # Install additional dependencies for running Django (e.g., Gunicorn for serving Django)
 RUN pip install gunicorn
@@ -52,4 +52,4 @@ RUN pip install gunicorn
 EXPOSE 8000 3000
 
 # Set the command to run both frontend (React) and backend (Django) servers
-CMD ["sh", "-c", "cd /app/backend && gunicorn --bind 0.0.0.0:8000 myapp.wsgi:application & cd /app/frontend && npm start"]
+CMD ["sh", "-c", "cd /ML/backend && gunicorn --bind 0.0.0.0:8000 myapp.wsgi:application & cd /ML/frontend && npm start"]
