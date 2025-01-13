@@ -2,7 +2,7 @@
 
 ## Live Demo 🌐  
 Experience the AI Chat Predictor in action!  
-[**Try It Now**](https://developers-home.vercel.app/)  
+
 
 ---
 
