@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaBrain, FaLightbulb, FaChartLine, FaRobot, FaImage } from "react-icons/fa";
+import { FaBrain, FaLightbulb, FaChartLine, FaRobot, FaImage, FaFacebook, FaTwitter, FaLinkedin } from "react-icons/fa";
 
 const features = [
   {
@@ -66,24 +66,32 @@ export default function Home() {
   return (
     <div className="font-poppins min-h-screen bg-gray-100 flex flex-col">
       {/* Hero Section */}
-      <header className="text-center py-16 bg-gray-100">
+      <header className="text-center py-16 bg-gradient-to-r from-purple-500 to-green-500 text-white">
         <motion.h1
-          className="text-5xl font-bold text-gray-900 mb-4"
+          className="text-5xl font-bold mb-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
         >
-          Unlock the Power of <span className="text-green-600">AI Predictions</span>
+          Unlock the Power of <span className="text-yellow-300">AI Predictions</span>
         </motion.h1>
         <motion.p
-          className="max-w-3xl mx-auto text-gray-600"
+          className="max-w-3xl mx-auto text-lg"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.7 }}
         >
-          Input your data or upload an image, and let our advanced AI model generate
-          predictions that can transform your workflow.
+          Input your data or upload an image, and let our advanced AI model generate predictions that can transform your workflow.
         </motion.p>
+        <motion.button
+          className="mt-6 px-6 py-3 bg-yellow-400 text-gray-900 font-semibold rounded-full hover:bg-yellow-500 shadow-lg"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          onClick={() => window.scrollTo({ top: 600, behavior: "smooth" })}
+        >
+          Get Started
+        </motion.button>
       </header>
 
       {/* Features Section */}
@@ -152,14 +160,14 @@ export default function Home() {
       </div>
 
       {/* Fixed Input Section */}
-      <div className="fixed bottom-20 left-0 right-0 md:w-[60%] w-full mx-auto bg-gray-100  px-4 py-3 flex items-center gap-2">
+      <div className="fixed bottom-20 left-0 right-0 md:w-[60%] w-full mx-auto bg-gray-100 px-4 py-3 flex items-center gap-2">
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Type your input..."
-          className="flex-grow px-4 py-2 border-2 md:w-1/2 w-2/3 border-gray-300 hover:shandow-md shandow-sm rounded-lg focus:ring-2 focus:ring-purple-500"
+          className="flex-grow px-4 py-2 border-2 md:w-1/2 w-2/3 border-gray-300 hover:shadow-md shadow-sm rounded-lg focus:ring-2 focus:ring-purple-500"
         />
         <label className="cursor-pointer px-4 py-2 text-white bg-blue-600 rounded-full hover:bg-blue-700 shadow-md flex items-center gap-2">
           <FaImage />
@@ -175,16 +183,27 @@ export default function Home() {
           onClick={handlePredict}
           className="px-4 py-2 text-white bg-purple-600 rounded-full hover:bg-purple-700 shadow-md"
         >
-          Search
+          Predict
         </button>
       </div>
 
       {/* Footer */}
-      <footer className="bg-gray-100 text-slate-900 text-md  py-6 mt-auto">
+      <footer className="bg-gray-100 text-slate-900 text-md py-6 mt-auto">
         <div className="container mx-auto text-center">
           <p className="text-base md:text-md">
-            &copy; {currentYear} Emmanuel. All Rights Reserved. We can make mistakes; we are not perfect.
+            &copy; {currentYear} Emmanuel. All Rights Reserved.
           </p>
+          <div className="flex justify-center gap-4 mt-4">
+            <a href="#" className="text-blue-600 hover:text-blue-800">
+              <FaFacebook size={24} />
+            </a>
+            <a href="#" className="text-blue-400 hover:text-blue-600">
+              <FaTwitter size={24} />
+            </a>
+            <a href="#" className="text-blue-700 hover:text-blue-900">
+              <FaLinkedin size={24} />
+            </a>
+          </div>
         </div>
       </footer>
     </div>
